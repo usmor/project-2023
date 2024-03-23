@@ -38,36 +38,36 @@ def your_fridge(name=None):
     ingredient_1 = request.args.get('ingredient_1')
     ingredient_2 = request.args.get('ingredient_2')
     ingredient_3 = request.args.get('ingredient_3')
-
     if ingredient_1 == '' and ingredient_2 == '' and ingredient_3 == '':
         return render_template('error.html')
-    elif ingredient_1 not in file['name'] and ingredient_2 not in file['name'] and ingredient_3 not in file['name']:
-        return render_template('error.html')
-
     recipes = None
     result = {'all_ingr': [], 'all_rec': None}
 
     # реализация алгоритма поиска подходящих рецептов
     if ingredient_1 != '':
-        result['all_ingr'].append(ingredient_1)
-        recipes = set(str(list(file.loc[file['name'] == ingredient_1]['all recipes'])
-                          ).replace('[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+        if ingredient_1 in file['name'].tolist():
+            result['all_ingr'].append(ingredient_1)
+            recipes = find_recipes(ingredient_1)
+        else:
+            return render_template('error.html')
     if ingredient_2 != '':
-        result['all_ingr'].append(ingredient_2)
-        if recipes is not None:
-            recipes &= set(str(list(file.loc[file['name'] == ingredient_2]['all recipes'])
-                               ).replace('[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+        if ingredient_2 in file['name'].tolist():
+            result['all_ingr'].append(ingredient_2)
+            if recipes is not None:
+                recipes &= find_recipes(ingredient_2)
+            else:
+                recipes = find_recipes(ingredient_2)
         else:
-            recipes = set(str(list(file.loc[file['name'] == ingredient_2]['all recipes'])
-                              ).replace('[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+            return render_template('error.html')
     if ingredient_3 != '':
-        result['all_ingr'].append(ingredient_3)
-        if recipes is not None:
-            recipes &= set(str(list(file.loc[file['name'] == ingredient_3]['all recipes'])
-                               ).replace('[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+        if ingredient_3 in file['name'].tolist():
+            result['all_ingr'].append(ingredient_3)
+            if recipes is not None:
+                recipes &= find_recipes(ingredient_3)
+            else:
+                recipes = find_recipes(ingredient_3)
         else:
-            recipes = set(str(list(file.loc[file['name'] == ingredient_3]['all recipes'])
-                              ).replace('[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+            return render_template('error.html')
 
     # получение данных найденных рецептов
     data = pd.read_csv('my_recipes_data.csv')
@@ -87,6 +87,12 @@ def your_fridge(name=None):
 
 
 # при вызове функции nutrition() переходим на страницу с анкетой для поиска сбалансированного питания
+
+def find_recipes(name):
+    file = pd.read_csv('ingredients.csv')
+    return set(str(list(file.loc[file['name'] == name]['all recipes'])).replace(
+        '[[', '').replace(']]', '').replace("['[", '').replace("]']", '').split(', '))
+
 
 @app.route('/nutrition')
 def nutrition():
@@ -121,7 +127,7 @@ def nutrition_result(name=None):
     # если данные введены верны, вызывается функция count() для поиска подходящих рецептов
     if cal == "":
         if not all([sex, age, weight, height,
-                    style]) or not age.isdigit() or not weight.isdigit() or not height.isdigit() or style == 'None'\
+                    style]) or not age.isdigit() or not weight.isdigit() or not height.isdigit() or style == 'None' \
                 or sex == 'None':
             return render_template('error.html')
         elif all([sex, age, weight, height,
@@ -185,7 +191,6 @@ def calculate_total_carbs(comb):
 # получение нужных данных для подходящей комбинации
 
 def count(calories):
-
     df = pd.read_csv('my_recipes_data.csv')
     final_combinations = []
     inter = df[abs(df['calorie content'] * 3 - calories / 3) <= calories * 0.1]

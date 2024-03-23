@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+<h2 style="font-family:georgia; font-size: 25px; color: #114B5F"><b>Холодильник</b></h2>
+<br>
+
+<p style="margin-right:20px; font-family:georgia; font-size: 18px">
+    Используемые ингредиенты: {{ result.all_ingr}}.</p>
+<p style="color:#C71585; margin-right:20px; font-family:georgia; font-size: 18px">{{ result.all_rec }}</p>
+{% endblock %}

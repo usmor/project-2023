@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+
+       TABLE {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #FBEEDA;
+       }
+       TD, TH {
+        padding: 3px;
+        border: 1px solid #114B5F;
+        text-align: center;
+       }
+    </style>
+</head>
+
+<h2 style="font-family:georgia; font-size: 25px; color: #114B5F"><b>Сбалансированное питание</b></h2>
+<br>
+<p style="margin-right:20px; font-family:georgia; font-size: 18px">
+    Параметры:</p>
+<ul>
+        {% for i in result.params %}
+            <li>
+                <p style="margin-right:20px; font-family:georgia; font-size: 18px">{{ i }}</p>
+            </li>
+        {% endfor %}
+</ul>
+
+<p style="margin-right:20px; font-family:georgia; font-size: 18px">
+    Суточная норма калорий: {{ result.calories}}.</p>
+<br>
+<h3 style="font-family:georgia; font-size: 20px; color: #114B5F">Комбинации:</h3>
+<p style="color:#C71585; margin-right:20px; font-family:georgia; font-size: 18px;">Если комбинации
+    не было найдены, или Вас не устраивают
+    предложенные варианты, заполните форму еще, Вам будет предложен новые наборы.</p>
+
+<table>
+    <col width="50%">
+    <col width="50%">
+    <tr>
+        <th style="margin-right:20px; font-family:georgia; font-size: 18px">Набор блюд</th>
+        <th style="margin-right:20px; font-family:georgia; font-size: 18px">Характеристики</th>
+    </tr>
+    {% for item in result.data %}
+    <tr>
+        <td>
+            <ul>
+                {% for dish in item[0] %}
+                <li><a style='color:#C71585; font-family:georgia; font-size: 18px'
+                       href="{{ dish[1] }}">{{ dish[0] }}</a></li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td><img src="{{ item[5] }}" alt="соотношение белков, жиров и углеводов" width="250" height="250">
+            <p style="margin-right:20px; font-family:georgia; font-size: 18px">Общая калорийность -- {{ item[1] }}</p>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

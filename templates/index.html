@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<table>
+    <tr>
+        <td>
+            <h2 style="font-family:georgia; font-size: 25px">Добро пожаловать в FoodDream!</h2>
+            <p style="font-family:georgia; font-size: 18px"> Наша платформа разработана специально для тех,
+                кто любит экспериментировать в готовке и есть на завтрак, обед и ужин кулинарные шедевры!
+                Здесь Вас ждет много всего вкусного и веселого!
+            <br>
+            Мы уверены, что Вам будет интересно на нашей платформе? Почему?
+            <br>
+            Взгляните на наши возможности!
+            </p>
+        </td>
+        <td>
+            <div id="demo" class="carousel slide" data-ride="carousel">
+
+              <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+              </ul>
+
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{{url_for('static', filename='photos/1.jpg')}}"  width="700" height="400"
+                        style="border: 5px solid #114B5F">
+                </div>
+                <div class="carousel-item">
+                  <img src="{{url_for('static', filename='photos/2.jpg')}}" width="700" height="400"
+                       style="border: 5px solid #114B5F">
+                </div>
+                <div class="carousel-item">
+                  <img src="{{url_for('static', filename='photos/3.jpg')}}" width="700" height="400"
+                       style="border: 5px solid #114B5F">
+                </div>
+              </div>
+
+              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+        </td>
+
+    </tr>
+</table>
+<br>
+<br>
+<br>
+<table>
+    <td>
+        <img src="{{url_for('static', filename='photos/fridge.jpg')}}"  width="500" height="300"
+                        style="border: 5px solid #114B5F">
+
+    </td>
+    <td>
+        <h3 style="margin-left:20px; font-family:georgia; font-size: 25px">Холодильник</h3>
+        <p style="margin-left:20px; font-family:georgia; font-size: 18px">Хочется кушать, а в магазин идти лень? Не беда,
+            ведь с функцией "Холодильник", Вы легко сможете подобрать подходящий
+            рецепт в зависимости от имеющихся ингредиентов. </p>
+
+    </td>
+</table>
+<br>
+<br>
+<br>
+<table>
+    <td>
+        <h3 style="margin-right:20px; font-family:georgia; font-size: 25px">Сбалансированное питание</h3>
+        <p style="margin-right:20px; font-family:georgia; font-size: 18px">Как питаться вкусно и не толстеть? Мы нашли решение!
+        В разделе сбалансированного питания можно составить набор из нескольких блюд с учетом общего количества
+        потребляемых калорий в день.</p>
+    </td>
+     <td>
+        <img src="{{url_for('static', filename='photos/nutrition.jpg')}}"  width="500" height="300"
+                        style="border: 5px solid #114B5F">
+
+    </td>
+</table>
+<br>
+<br>
+<br>
+
+{% endblock %}

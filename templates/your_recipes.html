@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+<h2 style="font-family:georgia; font-size: 25px; color: #114B5F"><b>Холодильник</b></h2>
+<br>
+
+<p style="margin-right:20px; font-family:georgia; font-size: 18px">
+    Используемые ингредиенты: {{ result.all_ingr}}.</p>
+<h3 style="font-family:georgia; font-size: 20px; color: #114B5F">Ваши рецепты:</h3>
+    <ul>
+        {% for i in result.all_rec %}
+            <li>
+                <a style='color:#C71585; font-family:georgia; font-size: 18px' href='{{ i[1] }}'>
+                    {{ i[0] }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

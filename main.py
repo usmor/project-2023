@@ -125,6 +125,8 @@ def nutrition_result(name=None):
 
     # проверка данных на формат
     # если данные введены верны, вызывается функция count() для поиска подходящих рецептов
+    if cal != '' and all([sex, age, weight, height, style]):
+        return render_template('error.html')
     if cal == "":
         if not all([sex, age, weight, height,
                     style]) or not age.isdigit() or not weight.isdigit() or not height.isdigit() or style == 'None' \
@@ -151,14 +153,17 @@ def nutrition_result(name=None):
                                 f'Рост: {height} см',
                                 f'Образ жизни: {style.lower()}']
 
-            result['data'] = count(calories)
+            if 500 <= float(cal) <= 6500:
+                result['data'] = count(calories)
+            else:
+                return render_template('error.html')
 
-    elif not cal.isdigit():
-        return render_template('error.html')
-    else:
+    elif cal.isdigit() and 500 <= float(cal) <= 6500:
         result['data'] = count(float(cal))
         result['calories'] = cal
         result['params'] = ['нет данных']
+    else:
+        return render_template('error.html')
 
     return render_template('nutrition_result.html', name=name, result=result)
 

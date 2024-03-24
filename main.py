@@ -158,7 +158,7 @@ def nutrition_result(name=None):
             else:
                 return render_template('error.html')
 
-    elif cal.isdigit() and 500 <= float(cal) <= 6500:
+    elif cal.isdigit() and 500 <= float(cal) <= 5000:
         result['data'] = count(float(cal))
         result['calories'] = cal
         result['params'] = ['нет данных']
